@@ -33,28 +33,44 @@
 class Layout
 {
 	// config loaded templates
-	private $templates = array();
+	private $templates 				= array();
 
 	// values set by the chain
-	private $active_template = 'main';
-	private $assets = array();
-	private $data = array();
+	private $active_template 		= 'main';
+	private $assets 				= array();
+	private $data 					= array();
 
 	// reference to the codeigniter object
 	private $ci;
+
+	// layout config
+	private $config;
 
 	public function __construct()
 	{
 		// get the config
 		include(APPPATH.'config/layouts.php');
 
+		// save the config for later
+		$this->config = $layout;
+
 		// set the templates from the config
-		$this->templates = $layouts;
+		$this->templates = $this->config['templates'];
 
 		// get hold of the codeigniter object
 		$this->ci =& get_instance();
 	}
 
+	// --------------------------------------------------------------------	
+
+	/**
+	 * Render the view.
+	 * 
+	 * @access public
+	 * @param string The view to display.
+	 * @param array Data to provide to the view.
+	 * @return void
+	 */
 	public function show($view, $data = null)
 	{
 		// if we have been given data, merge it
@@ -93,6 +109,15 @@ class Layout
 		$this->_cleanup();
 	}
 
+	// --------------------------------------------------------------------	
+
+	/**
+	 * Select a different template.
+	 * 
+	 * @access public
+	 * @param string The name of the template.
+	 * @return Layout
+	 */
 	public function template($template)
 	{
 		// set the template to use, defaults to the first
@@ -100,8 +125,18 @@ class Layout
 
 		return $this;
 	}
-	
-	public function js($asset)
+
+	// --------------------------------------------------------------------	
+
+	/**
+	 * Attach a JavaScript to this view.
+	 * 
+	 * @access public
+	 * @param string The name of the javascript file.
+	 * @param boolean Add the javascript prefix?
+	 * @return Layout
+	 */	
+	public function js($asset, $prefix = true)
 	{
 		// check to see if we have an array of assets
 		if(is_array($asset))
@@ -117,8 +152,18 @@ class Layout
 
 		return $this;
 	}
-	
-	public function css($asset)
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Attach a CSS stylesheet to this view.
+	 * 
+	 * @access public
+	 * @param string The name of the stylesheet file.
+	 * @param boolean Add the CSS prefix?
+	 * @return Layout
+	 */		
+	public function css($asset, $prefix = true)
 	{
 		// check to see if we have an array of assets
 		if(is_array($asset))
@@ -134,7 +179,17 @@ class Layout
 
 		return $this;	
 	}
-	
+
+	// --------------------------------------------------------------------	
+
+	/**
+	 * Bind a value to the view.
+	 * 
+	 * @access public
+	 * @param string The variable name.
+	 * @param mixed The value.
+	 * @return Layout
+	 */		
 	public function bind($key, $value)
 	{
 		// add the value to our data array
@@ -142,15 +197,34 @@ class Layout
 
 		return $this;
 	}
-	
+
+	// --------------------------------------------------------------------	
+
+	/**
+	 * Bind a value to the view.
+	 * 
+	 * @access private
+	 * @param array The view data array.
+	 * @return array The Modified view data array.
+	 */	
 	private function _prepare($data)
 	{
 		// bind our assets
 		$data['assets'] = $this->assets;
 
+		// add our default values, but existing ones take priority
+		$data = array_merge($this->config['default_values'], $data);
+
 		return $data;
 	}
 
+	// --------------------------------------------------------------------	
+
+	/**
+	 * Reset all values after a chain trigger.
+	 * 
+	 * @access private
+	 */	
 	private function _cleanup()
 	{
 		// reset the chain using default values
