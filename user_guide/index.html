@@ -1,0 +1,215 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title></title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <!-- CSS concatenated and minified via ant build script-->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- end CSS-->
+
+  <script src="js/libs/modernizr-2.0.6.min.js"></script>
+</head>
+
+<body>
+
+  <div id="container">
+    <header>
+      <h1>Layout</h1>
+      <h2>An advanced layout library for CodeIgniter.</h2>
+
+      <p>Many CodeIgniter learners still find it difficult to apply templates to their projects. The layout library makes it simple for both new and experienced CodeIgniter coders to add nested templates to their application.</p>
+
+      <p>Templates are defined in a simple array format, and can be as simple or as complex as you like, built to suit your ever need.</p>
+
+      <p>The Layout library was created by <a href="http://daylere.es">Dayle Rees</a> and is hosted on <a href="https://github.com/daylerees/layout">Github</a> using the same license as CodeIgniter, in the hopes that it can be of use to all CodeIgniter framework users.</p>
+    </header>
+
+
+
+    <div id="main" role="main">
+
+      <hr />
+
+      <!-- INDEX ---------------------------------------------->
+      <h2>Index</h2>
+      <ol id="index">
+        <li><a href="#installation">Installation</a></li>
+        <li><a href="#show">Render a View</a></li>
+        <li><a href="#templates">Using Templates</a></li>
+        <li><a href="#bind">Binding Data to Views</a></li>
+        <li><a href="#resources">Adding Resources</a></li>
+        <li><a href="#helper">Layout Helper</a></li>                                        
+      </ol> 
+
+      <hr />
+
+      <!-- INSTALLATION ---------------------------------------------->
+      <h2 id="installation">Installation</h2>
+      <p>To install the layout library, simply extract the archive and 'drop' the extracted <code>application</code> folder into your CodeIgniter project, replacing/merging where neccesary.</p>
+      <p>You can configure your installation using the config file located at <code>application/config/layout.php</code>.</p>
+
+      <hr />
+
+      <!-- SHOW ---------------------------------------------->
+      <h2 id="show">Render a View</h2>
+      <p>To render a view, simply use the <code>show()</code> method. It will render the supplied view using the default <em>main</em> as defined in the layout config file at <code>application/config/layout.php</code>.</p>
+
+      <pre>$this->layout->show('my_view');</pre>
+
+      <hr />
+
+      <!-- TEMPLATES ---------------------------------------------->
+      <h2 id="templates">Using Templates</h2>
+      <p>Pre-defined templates allow you to nest your view within a combination of other views, allowing you to create 'site-wrappers' and other forms of layout combinations.</p>
+      <p>Layouts are defined in the config file at <code>application/config/layout.php</code> in the <code>$layout['templates']</code> array.</p>
+
+      
+<pre>
+$layout['templates'] = array(
+
+  // default template
+  'main'  =>  array(
+    '-YIELD-',
+  ),
+
+
+  // template_1
+  'template_1'  =>  array(
+    'my_header',
+    '-YIELD-',
+    'my_footer'
+  )  
+
+);
+</pre>
+
+    <p>In the above example, <code>'main'</code> is a template that is provided by default with the layout library, it will simply show the view passed to the layout library using the <code>show()</code> method.</p>
+    <p>The template <code>'template_1'</code> will first render the view file <code>'my_header'</code> then it will <em>yield</em> to the view specified by <code>show()</code> and finally, it will render the view file <code>'my_footer'</code>.</p>
+    <p>To specify a template, simply use the <code>template()</code> method, which is chainable :</p>
+
+<pre>
+$this->layout->template('template_1')->show('my_view');
+
+// or..
+
+$this->layout->template('template_1');
+$this->layout->show('my_view');
+</pre>
+
+      <hr />
+
+      <!-- BIND ---------------------------------------------->
+      <h2 id="bind">Binding Data to Views</h2>
+      <p>You may pass an array as a second paramater to the <code>show()</code> method, to provide an array of view variables that are accessible in the same way as with <code>$this->load->view('view', $vars);</code>. <em>Infact, the layout library passed the data to the CodeIgniter this way, it simply serves as a wrapper!</em></p>
+
+<pre>
+// in the controller..
+$this->layout->show('my_view', array('dog' = 'Rover'));
+
+// in the view
+&lt;?php echo $dog; ?> // Rover
+</pre>
+
+    <p>You can alternatively use the <code>bind()</code> method to provide variables to the view, or a combination of both methods. The <code>bind()</code> accepts two parameters, a string index, and its value. This method is also chainable.</p>
+
+<pre>
+$this->layout->bind('dog', 'Rover')->show('my_view');
+</pre>    
+
+    <hr />
+
+    <!-- RESOURCES ---------------------------------------------->
+    <h2 id="resources">Adding Resources</h2>
+
+    <h3>CSS Stylesheets</h3>
+
+    <p>The layout library makes it much easier to add resources such as <em>javascript</em> and <em>css</em> files to your project, using the supplied chainable methods. Using the Layout Helper you can also display the required HTML to link these items automatically within your views.</p>
+
+
+    <p>To add a CSS file, use the <code>css()</code> method, you can add a global prefix for all css files in <code>application/config/layout.php</code></p>
+
+    <p>The <code>css()</code> method is chainable.</p>
+
+<pre>
+$this->layout->css('my_styles.css')->show('my_view');
+</pre>
+  
+    <h3>Javascript Files</h3>
+
+    <p>You can add javascript files to a template using the same notation as CSS files, this method is once again chainable.</p>
+
+<pre>
+$this->layout->js('my_script.js')->show('my_view');
+</pre>
+
+    <h3>More Information</h3>
+
+    <p>To access either resource manually, simply access the <code>$assets['css']</code> or <code>$assets['js']</code> array within your views.</p>
+
+    <!-- HELPER ---------------------------------------------->
+    <h2 id="layout">Layout Helper</h2>
+
+    <p>The layout helper provides an easy method for linking resources within your view files, simply load the helper <code>layout</code> and use the methods <code>get_css()</code> and <code>get_js()</code> within your view files to link all associated resources.</p>
+
+    <p>The default output templates for these methods are as follows.</p>
+
+<pre>
+// css..
+&lt;link rel="stylesheet" href="$1"&gt;
+
+// js..
+&lt;script src="$1"&gt;&lt;/script&gt;
+</pre>    
+
+    <p>The value <em>$1</em> will be replaced with the link to the resource.</p>
+
+    <h3>Advanced</h3>
+
+    <p>To override the default templates for these methods, simply pass an argument to the method containing a new template, for example :</p>
+
+<pre>
+&lt;?php get_css('&lt;script type="text/javascript" src="$1"&gt;&lt;/script&gt;'); ?&gt;
+</pre>    
+
+    </div>
+    <footer>
+
+    </footer>
+  </div> <!--! end of #container -->
+
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>')</script>
+
+
+  <!-- scripts concatenated and minified via ant build script-->
+  <script defer src="js/plugins.js"></script>
+  <script defer src="js/script.js"></script>
+  <!-- end scripts-->
+
+
+  <script> // Change UA-XXXXX-X to be your site's ID
+    window._gaq = [['_setAccount','UAXXXXXXXX1'],['_trackPageview'],['_trackPageLoadTime']];
+    Modernizr.load({
+      load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
+    });
+  </script>
+
+
+  <!--[if lt IE 7 ]>
+    <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
+    <script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
+  <![endif]-->
+  
+</body>
+</html>
