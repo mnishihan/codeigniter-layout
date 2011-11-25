@@ -49,7 +49,7 @@ class Layout
 	public function __construct()
 	{
 		// get the config
-		include(APPPATH.'config/layouts.php');
+		include(APPPATH.'config/layout.php');
 
 		// save the config for later
 		$this->config = $layout;
@@ -132,7 +132,7 @@ class Layout
 	 * Attach a JavaScript to this view.
 	 * 
 	 * @access public
-	 * @param string The name of the javascript file.
+	 * @param mixed The name of the javascript file, or array.
 	 * @param boolean Add the javascript prefix?
 	 * @return Layout
 	 */	
@@ -141,12 +141,16 @@ class Layout
 		// check to see if we have an array of assets
 		if(is_array($asset))
 		{
-			// walk the given array passing back to this method
-			array_walk($asset, array($this, 'js'));
+			// loop the given array passing back to this method
+			foreach ($asset as $a)
+			{
+				$this->js($a, $prefix);
+			}
 		}
 		else
 		{
 			// add the asset to the assets array
+			if($prefix) $asset = $this->config['js_prefix'] . $asset;
 			$this->assets['js'][] = $asset;
 		}
 
@@ -159,7 +163,7 @@ class Layout
 	 * Attach a CSS stylesheet to this view.
 	 * 
 	 * @access public
-	 * @param string The name of the stylesheet file.
+	 * @param mixed The name of the stylesheet file, or array.
 	 * @param boolean Add the CSS prefix?
 	 * @return Layout
 	 */		
@@ -168,12 +172,16 @@ class Layout
 		// check to see if we have an array of assets
 		if(is_array($asset))
 		{
-			// walk the given array passing back to this method
-			array_walk($asset, array($this, 'css'));
+			// loop the given array passing back to this method
+			foreach ($asset as $a)
+			{
+				$this->css($a, $prefix);
+			}
 		}
 		else
 		{
 			// add the asset to the assets array
+			if($prefix) $asset = $this->config['css_prefix'] . $asset;
 			$this->assets['css'][] = $asset;
 		}
 

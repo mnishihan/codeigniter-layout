@@ -5,4 +5,4 @@ Many CodeIgniter learners still find it difficult to apply templates to their pr
 
 Templates are defined in a simple array format, and can be as simple or as complex as you like, built to suit your ever need.
 
-Full Documentation (WIP) : [On daylere.es](http://daylere.es/user_guide)
+Full Documentation (WIP) : [On daylere.es](http://daylere.es/layout)

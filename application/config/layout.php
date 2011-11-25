@@ -29,9 +29,7 @@ $layout['templates'] = array(
 
 	// default template
 	'main'	=>	array(
-		'template/html_head',
-		'-YIELD-',
-		'template/html_foot'
+		'-YIELD-'
 	)
 );
 
@@ -46,7 +44,7 @@ $layout['templates'] = array(
 |
 */
 
-$layout['css_prefix'] = 'public/css/';
+$layout['css_prefix'] = '';
 
 /*
 |--------------------------------------------------------------------------
@@ -58,7 +56,7 @@ $layout['css_prefix'] = 'public/css/';
 |
 */
 
-$layout['js_prefix'] = 'public/js/';
+$layout['js_prefix'] = '';
 
 /*
 |--------------------------------------------------------------------------

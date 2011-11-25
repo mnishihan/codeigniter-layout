@@ -32,6 +32,15 @@
       <p>Templates are defined in a simple array format, and can be as simple or as complex as you like, built to suit your ever need.</p>
 
       <p>The Layout library was created by <a href="http://daylere.es">Dayle Rees</a> and is hosted on <a href="https://github.com/daylerees/layout">Github</a> using the same license as CodeIgniter, in the hopes that it can be of use to all CodeIgniter framework users.</p>
+
+      <a href="#" id="download-button">Download Latest Build</a>
+      <br /><br />
+      <div class="fb-like" data-href="http://daylerees.com/layout" data-send="true" data-width="450" data-show-faces="true" data-font="lucida grande"></div>
+      <br /><br />
+      <g:plusone size="medium" annotation="inline" href="http://daylerees.com/layout"></g:plusone>
+      <br /><br />
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://daylerees.com/layout" data-text="CodeIgniter Layout library from @daylerees , give it a go!" data-count="vertical" data-via="daylerees">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+      
     </header>
 
 
@@ -47,7 +56,7 @@
         <li><a href="#show">Render a View</a></li>
         <li><a href="#templates">Using Templates</a></li>
         <li><a href="#bind">Binding Data to Views</a></li>
-        <li><a href="#resources">Adding Resources</a></li>
+        <li><a href="#assets">Adding Assets</a></li>
         <li><a href="#helper">Layout Helper</a></li>                                        
       </ol> 
 
@@ -128,12 +137,12 @@ $this->layout->bind('dog', 'Rover')->show('my_view');
 
     <hr />
 
-    <!-- RESOURCES ---------------------------------------------->
-    <h2 id="resources">Adding Resources</h2>
+    <!-- ASSETS ---------------------------------------------->
+    <h2 id="assets">Adding Assets</h2>
 
     <h3>CSS Stylesheets</h3>
 
-    <p>The layout library makes it much easier to add resources such as <em>javascript</em> and <em>css</em> files to your project, using the supplied chainable methods. Using the Layout Helper you can also display the required HTML to link these items automatically within your views.</p>
+    <p>The layout library makes it much easier to add assets such as <em>javascript</em> and <em>css</em> files to your project, using the supplied chainable methods. Using the Layout Helper you can also display the required HTML to link these items automatically within your views.</p>
 
 
     <p>To add a CSS file, use the <code>css()</code> method, you can add a global prefix for all css files in <code>application/config/layout.php</code></p>
@@ -143,6 +152,7 @@ $this->layout->bind('dog', 'Rover')->show('my_view');
 <pre>
 $this->layout->css('my_styles.css')->show('my_view');
 </pre>
+
   
     <h3>Javascript Files</h3>
 
@@ -153,6 +163,12 @@ $this->layout->js('my_script.js')->show('my_view');
 </pre>
 
     <h3>More Information</h3>
+
+    <p>CSS / Javascript prefixes are added as defined in <code>application/config/layout.php</code>, if you do not wish to have the prefix added, simply pass <code>false</code> as a second paramter to either method.</p>
+
+<pre>
+$this->layout->js('my_script.js', false);
+</pre>    
 
     <p>To access either resource manually, simply access the <code>$assets['css']</code> or <code>$assets['js']</code> array within your views.</p>
 
@@ -191,14 +207,27 @@ $this->layout->js('my_script.js')->show('my_view');
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>')</script>
 
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=197331940337839";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
 
-  <!-- scripts concatenated and minified via ant build script-->
-  <script defer src="js/plugins.js"></script>
-  <script defer src="js/script.js"></script>
-  <!-- end scripts-->
+  <script type="text/javascript">
+  window.___gcfg = {lang: 'en-GB'};
+
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
 
 
-  <script> // Change UA-XXXXX-X to be your site's ID
+  <script>
     window._gaq = [['_setAccount','UAXXXXXXXX1'],['_trackPageview'],['_trackPageLoadTime']];
     Modernizr.load({
       load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
