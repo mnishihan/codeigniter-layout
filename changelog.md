@@ -1,3 +1,3 @@
 #Changelog
-* 25-11-2011
-** First test release, version 0.9 beta.
+##v0.9 beta
+* First test release, version 0.9 beta.
