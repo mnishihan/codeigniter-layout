@@ -23,6 +23,7 @@
  *
  * @package		Layout
  * @subpackage	Libraries
+ * @version     0.9 beta
  * @category	Libraries
  * @copyright	Copyright (c) 2011 Dayle Rees.
  * @license		http://codeigniter.com/user_guide/license.html
